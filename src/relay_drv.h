@@ -50,6 +50,10 @@
 #define SAINSMART16_USB_NAME          "Sainsmart USB-HID 16-channel relay card"
 #define SAINSMART16_USB_NUM_RELAYS     16
 
+/* Nuvoton HID API compatibe 16-channel relay card */
+#define NUVOTON_USB_NAME              "Nuvoton/Winbond Electronics Corp. 16-channel relay controller"
+#define NUVOTON_USB_NUM_RELAYS        16
+
 /* Generic GPIO connected relay cards */
 #define GENERIC_GPIO_NAME              "Generic GPIO relays"
 #define GENERIC_GPIO_NUM_RELAYS        8
@@ -59,7 +63,7 @@
 #define MAX_NUM_RELAYS 16
 #define MAX_RELAY_CARD_NAME_LEN 40
 #define MAX_COM_PORT_NAME_LEN 32
-#define MAX_SERIAL_LEN 32
+#define MAX_SERIAL_LEN 256
 
 
 typedef enum
@@ -77,6 +81,9 @@ typedef enum
 #endif
 #ifdef DRV_SAINSMART16
    SAINSMART16_USB_RELAY_TYPE,     /* Sainsmart USB-HID relay card */
+#endif
+#ifdef DRV_NUVOTON
+   NUVOTON_USB_RELAY_TYPE,         /* Nuvoton/Winbond Electronics Corp. 16-channel relay controller */
 #endif
    
    /* Add other relay types here */

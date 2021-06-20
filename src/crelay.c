@@ -934,7 +934,7 @@ int main(int argc, char *argv[])
       {
          if (argc > (argn+1))
          {
-            serial = malloc(sizeof(char)*strlen(argv[argn+1]));
+            serial = malloc(sizeof(char)*strlen(argv[argn+1])+1);
             strcpy(serial, argv[argn+1]);
             argn += 2;
          }
@@ -947,15 +947,21 @@ int main(int argc, char *argv[])
 
       if (crelay_detect_relay_card(com_port, &num_relays, serial, NULL) == -1)
       {
-         printf("No compatible device detected.\n");
+         printf("** No compatible device detected **\n");
          
          if(geteuid() != 0)
          {
+            puts("You might not have permissions to use the wanted device.");
+            puts("If the device is connected, check what group the device belongs to.");
+            puts("You may find the device group with \"ls -al /dev/<device node name>\"");
+            puts("You can add a group to a user with \"usermod -a -G <group name> <user name>\"");
+            
+            /** Bad very not good pracis from windows, to require root priv 
             printf("\nWarning: this program is currently not running with root privileges !\n");
             printf("Therefore it might not be able to access your relay card communication port.\n");
             printf("Consider invoking the program from the root account or use \"sudo ...\"\n");
+            **/
          }
-         
          exit(EXIT_FAILURE);
       }
 

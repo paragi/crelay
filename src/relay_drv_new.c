@@ -36,7 +36,6 @@
 #include <string.h>
 #include <stdint.h>
 
-
 #include "relay_drv.h"
 
 /* Card driver specific include files */
@@ -99,7 +98,7 @@ static relay_data_t relay_data[LAST_RELAY_TYPE] =
 #endif
 #ifdef DRV_NUVOTON
    {  // NUVOTON_USB_RELAY_TYPE
-      detect_relay_controller_nuvoton,
+      detect_relay_card_nuvoton,
       get_relay_nuvoton,
       set_relay_nuvoton,
       NUVOTON_USB_NAME
@@ -134,22 +133,48 @@ int crelay_detect_all_relay_cards(relay_info_t** relay_info)
    
    /* Create first list element */
    my_relay_info = malloc(sizeof(relay_info_t));
+   strcpy(my_relay_info->serial,"Start (overwrite)");
    my_relay_info->next = NULL;
 
    /* Return pointer to first element to caller */
    *relay_info = my_relay_info;
-   
-   for (i=1; i<LAST_RELAY_TYPE; i++)
+    printf("#First %p\n",*relay_info);
+   for (i=1; i<LAST_RELAY_TYPE-2; i++)
    {
+     printf("#2 %d->%p\n",i,my_relay_info);
       /* Create new list element with related info for each detected card */
       (*relay_data[i].detect_relay_card_fun)(NULL, NULL, NULL, &my_relay_info);
    }
- 
+   
+   do{
+     relay_info_t *pp, *p = my_relay_info;
+     /*
+     for(int i=1; i<5; i++){
+       p->relay_type = 5;
+       snprintf(p->serial,sizeof(p->serial),"Test %d",i);
+       pp = malloc(sizeof(relay_info_t));
+       pp->next = NULL;
+       p->next = pp;
+       p = pp;
+     }
+    */
+    p = *relay_info;
+    printf("First: type: %d serial: %s next: %p\n",p->relay_type,p->serial,p->next);
+
+    printf("List relay_info %p:\n",p);
+    for(int i = 1 ; p->next; i++, p = p->next)
+      printf("    #%d type: %d serial: %s next: %p\n",i,p->relay_type,p->serial,p->next);
+   }while(0); 
+
+
+
+   if ((*relay_info)->next == NULL) printf("#! Faile4d %p %s %p\n",*relay_info,(*relay_info)->serial,(*relay_info)->next);
    if ((*relay_info)->next == NULL)
       return -1;
    else
       return 0;
 }
+
 
 /**********************************************************
  * Function crelay_detect_relay_card()

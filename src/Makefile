@@ -17,6 +17,7 @@ DRV_CONRAD	= y
 DRV_SAINSMART	= y
 DRV_SAINSMART16	= y
 DRV_HIDAPI	= y
+DRV_NUVOTON	= y
 
 #DEBUG	= -g -O0
 DEBUG	= -O2
@@ -56,6 +57,11 @@ ifeq ($(DRV_HIDAPI), y)
 SRC	+= relay_drv_hidapi.c
 LIBS	+= -lhidapi-libusb
 OPTS	+= -DDRV_HIDAPI
+endif
+ifeq ($(DRV_NUVOTON), y)
+SRC	+= relay_drv_nuvoton.c
+LIBS	+= -lhidapi-libusb -ludev
+OPTS	+= -DDRV_NUVOTON
 endif
 
 OBJ	= $(SRC:.c=.o)
