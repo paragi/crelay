@@ -130,7 +130,7 @@
 #include "relay_drv_nuvoton.h"
 
 
-//#define DEBUG
+#define DEBUG
 #define VENDOR_ID 0x0416
 #define PRODUCT_ID 0x5020
 #define NUMBER_OF_RELAYS 16
@@ -525,7 +525,6 @@ int get_relay_nuvoton(char* portname, uint8_t relay, relay_state_t* relay_state,
 {
   hid_device *hid_dev;
   uint16_t relay_states;
-  char str[20];
 
   if (relay<1 || relay>NUMBER_OF_RELAYS)
   {  
@@ -548,6 +547,7 @@ int get_relay_nuvoton(char* portname, uint8_t relay, relay_state_t* relay_state,
   *relay_state = relay_states & ( 1 << (relay-1)) ? ON : OFF;
 
   #ifdef DEBUG
+    char str[20];
     printf("Relays : %s\n",int2bin(relay_states, 16, str, sizeof(str)));
     printf("Relay %d is %s\n", relay, *relay_state ? "ON" : "OFF");
   #endif
@@ -572,7 +572,6 @@ int set_relay_nuvoton(char* portname, uint8_t relay, relay_state_t relay_state, 
 { 
   hid_device *hid_dev;
   uint16_t   relay_states;
-  char str[20];
   
   if (relay > NUMBER_OF_RELAYS)
   {  
@@ -593,6 +592,7 @@ int set_relay_nuvoton(char* portname, uint8_t relay, relay_state_t relay_state, 
   }
 
   #ifdef DEBUG
+    char str[20];
     printf("Relays before: %s\n",int2bin(relay_states,16,str,sizeof(str)));
   #endif
   
