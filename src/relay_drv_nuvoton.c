@@ -373,7 +373,7 @@ int detect_relay_controller_nuvoton(char* portname, uint8_t* num_relays, char* s
   
   // Copy to relay_info structure
   while( dev_info && relay_info && (*relay_info) ){
-    (*relay_info)->relay_type =  NUVOTON_USB_RELAY_TYPE;
+    (*relay_info)->relay_type = NUVOTON_USB_RELAY_TYPE;
     snprintf( (*relay_info)->serial,
             sizeof((*relay_info)->serial)-1,
             "%04X:%04X:%.20s:%.32s:%.32s",

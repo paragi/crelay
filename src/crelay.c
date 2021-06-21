@@ -888,6 +888,18 @@ int main(int argc, char *argv[])
          syslog(LOG_DAEMON | LOG_NOTICE, "Program is now running as system daemon");
       }
 
+      printf("Running as daemon. listening at http://%s:%d\n", inet_ntoa(iface), port);      
+
+      if (!strcmp(argv[1],"-D"))
+      {
+         /* Daemonise program (send to background) */
+         if (daemon(0, 0) == -1) 
+         {
+            syslog(LOG_DAEMON | LOG_ERR, "Failed to daemonize: %s", strerror(errno));
+            exit(EXIT_FAILURE);
+         }
+         syslog(LOG_DAEMON | LOG_NOTICE, "Program is now running as system daemon");
+    
       /* Init GPIO pins in case they have been configured */
       crelay_detect_relay_card(com_port, &num_relays, NULL, NULL);
       

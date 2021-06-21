@@ -138,7 +138,7 @@ The installation procedure is usually perfomed directly on the target system. Th
 
 If you have a Debian, Ubuntu or derivative distribution:
 <pre>
-    apt-get install libftdi1 libftdi-dev libhidapi-libusb0 libhidapi-dev libusb-1.0-0 libusb-1.0-0-dev
+    sudo apt-get install libftdi1 libftdi-dev libhidapi-libusb0 libhidapi-dev libusb-1.0-0 libusb-1.0-0-dev libudev-dev
 </pre>
 
 If you have OpenSUSE or a derivative distribution:
@@ -149,7 +149,7 @@ If you have OpenSUSE or a derivative distribution:
 * Build dependencies from source (optional):  
 On some not so recent Linux distributions (like Debian Weezy) the HIDAPI library is not yet packaged, so it needs to be build from the source code. Follow these instructions to do that:
 <pre>
-    apt-get install libudev-dev libusb-1.0-0-dev
+    sudo apt-get install libudev-dev libusb-1.0-0-dev
     git clone git://github.com/signal11/hidapi.git
     ./bootstrap
     ./configure
